@@ -12,6 +12,10 @@ ld A[MAXN+48],B[MAXN+48],C[MAXN+48],D[MAXN+48];
 
 namespace Simplex
 {
+    // m个约束，n个变量
+    // 第i个约束，sum(a[i][j]*x[j])+a[i][0]>=0
+    // solve函数返回约束是否有解
+    // 若有解，则使得目标函数 sum(a[0][j]*x[j]) 最大化
     int T;
     ld a[MAXN+48][MAXN+48];
     int n,m,id[MAXN+48],tp[MAXN+48],nn;
@@ -57,6 +61,20 @@ namespace Simplex
     }
 }
 
+void init()
+{
+    rep(i,1,n)
+    {
+        ld div=sqrt(A[i]*A[i]+B[i]*B[i]+C[i]*C[i]);
+        Simplex::a[i][1]=A[i]/div;Simplex::a[i][2]=B[i]/div;Simplex::a[i][3]=C[i]/div;
+        Simplex::a[i][0]=-D[i]/div;Simplex::a[i][4]=-1;
+    }
+    Simplex::a[n+1][0]=0;Simplex::a[n+1][1]=1;Simplex::a[n+1][2]=0;Simplex::a[n+1][3]=0;Simplex::a[n+1][4]=-1;
+    Simplex::a[n+2][0]=0;Simplex::a[n+2][1]=0;Simplex::a[n+2][2]=1;Simplex::a[n+2][3]=0;Simplex::a[n+2][4]=-1;
+    Simplex::a[n+3][0]=0;Simplex::a[n+3][1]=0;Simplex::a[n+3][2]=0;Simplex::a[n+3][3]=1;Simplex::a[n+3][4]=-1;
+    Simplex::a[0][1]=Simplex::a[0][2]=Simplex::a[0][3]=0;Simplex::a[0][4]=1;
+}
+
 void init(ld r)
 {
     rep(i,1,n)
@@ -74,20 +92,20 @@ void init(ld r)
 int main ()
 {
     int ca;scanf("%d",&ca);
-    ld x[4];
+    ld x[5];
     while (ca--)
     {
         scanf("%d",&n);rep(i,1,n) scanf("%Lf%Lf%Lf%Lf",A+i,B+i,C+i,D+i),A[i]=-A[i],B[i]=-B[i],C[i]=-C[i],D[i]=-D[i];
-        Simplex::n=3;Simplex::m=n+3;
-        init(0);if (!Simplex::solve(x)) {puts("0.0000");continue;}
+        Simplex::n=3;Simplex::m=n+3;ld ans;
         init(1e9+10);if (Simplex::solve(x)) {puts("Infinity");continue;}
-        ld l=0,r=1e9,mid,ans=0;
-        while (r-l>1e-7)
+        Simplex::n=4;
+        init();bool res=Simplex::solve(x);
+        if (!res) puts("0.0000");
+        else
         {
-            mid=(l+r)/2;
-            init(mid);if (Simplex::solve(x)) ans=mid,l=mid; else r=mid;
+            ans=x[4];
+            if (ans>1e9) puts("Infinity"); else printf("%.4Lf\n",ans);
         }
-        printf("%.4Lf\n",ans);
     }
     return 0;
 }
