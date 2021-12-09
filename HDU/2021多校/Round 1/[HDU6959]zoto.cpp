@@ -38,7 +38,7 @@ namespace BIT
 	void undo() {rep(i,1,htot) c[history[i]]=0;}
 }
 
-void cdq (int l,int r)
+void cdq(int l,int r)
 {
     if (l==r) return;
     int mid=(l+r)>>1;cdq(l,mid);
