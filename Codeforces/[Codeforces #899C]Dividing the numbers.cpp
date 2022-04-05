@@ -1,0 +1,92 @@
+#include <cstdio>
+#include <iostream>
+#include <cstring>
+#include <string>
+#include <cstdlib>
+#include <utility>
+#include <algorithm>
+#include <bitset>
+#include <cmath>
+#include <sstream>
+#include <vector>
+#include <queue>
+#include <deque>
+#include <stack>
+#include <set>
+#include <map>
+#include <cctype>
+#define LL long long
+#define LB long double
+#define mp make_pair
+#define pb push_back
+#define pf push_front 
+#define Pair pair<int,int>
+#define x first
+#define y second
+#define LOWBIT(X) x & (-x)
+using namespace std;
+
+const int MOD=1e6;
+const int INF=2e9;
+const LL LINF=2e16;
+const int magic=348;
+const double eps=1e-10;
+
+inline int getint()
+{
+	char ch;bool f;int res;
+	while (!isdigit(ch=getchar()) && ch!='-') {}
+	if (ch=='-') f=false,res=0; else f=true,res=ch-'0';
+	while (isdigit(ch=getchar())) res=res*10+ch-'0';
+	return f?res:-res;
+}
+
+inline LL getLL()
+{
+	char ch;bool f;LL res;
+	while (!isdigit(ch=getchar()) && ch!='-') {}
+	if (ch=='-') f=false,res=0; else f=true,res=ch-'0';
+	while (isdigit(ch=getchar())) res=res*10+ch-'0';
+	return f?res:-res;
+}
+
+int n;
+
+int main ()
+{
+	n=getint();
+	int nn=n%4;
+	int i;
+	if (nn==0)
+	{
+		printf("0\n");
+		printf("%d ",n/2);
+		for (i=1;i<=n/4;i++)
+			printf("%d %d ",(i-1)*4+1,i*4);
+		return 0;
+	}
+	if (nn==1)
+	{
+		printf("1\n");
+		printf("%d ",(n-1)/2+1);
+		printf("1 ");
+		for (i=1;i<=(n-1)/4;i++) printf("%d %d ",(i-1)*4+1+1,i*4+1);
+		return 0;
+	}
+	if (nn==2)
+	{
+		printf("1\n");
+		printf("%d ",(n-2)/2+1);
+		printf("1 ");
+		for (i=1;i<=(n-2)/4;i++) printf("%d %d ",(i-1)*4+1+2,i*4+2);
+		return 0;
+	}
+	if (nn==3)
+	{
+		printf("0\n");
+		printf("%d ",(n-3)/2+2);
+		printf("1 2 ");
+		for (i=1;i<=(n-3)/4;i++) printf("%d %d ",(i-1)*4+1+3,i*4+3);
+	}
+	return 0;
+}
