@@ -20,7 +20,6 @@ public:
         while (!q.empty())
         {
             int cur = q.front(); q.pop();
-            cout << cur << endl;
             for (auto to : v[cur])
                 if (dist[to] == -1)
                 {
